@@ -125,7 +125,7 @@ export const ITEM_COPY = {
   /** 模型写的那句理由叫什么：卡片、详情页、Markdown 导出、给 Agent 的回答和群推送都用它。 */
   reasonLabel: "推荐理由",
   /** 读者在网页和分享图上看不看得到 AI 评分。只管显示：公开 API 和 MCP 的数据照样带 score，后台照常显示。 */
-  showScore: false,
+  showScore: true,
 };
 
 /** 关于页的一张二维码卡片。 */

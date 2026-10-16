@@ -1,0 +1,4 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": ["*.ts", "../api/asset-files.d.ts", "../api/cloudflare.d.ts"]
+}

@@ -7,13 +7,19 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://www.cottoninc.com/feed/",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T1",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 120,
-      "tags": ["官方", "纤维", "市场"],
+      "tags": [
+        "官方",
+        "纤维",
+        "市场"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
@@ -23,13 +29,18 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://feeds.feedburner.com/fibre2fashion/textile-news",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T2",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 90,
-      "tags": ["行业媒体", "市场"],
+      "tags": [
+        "行业媒体",
+        "市场"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
@@ -39,13 +50,18 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://theindustry.fashion/feed/",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T2",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 90,
-      "tags": ["行业媒体", "市场"],
+      "tags": [
+        "行业媒体",
+        "市场"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
@@ -55,13 +71,18 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://www.textilegence.com/en/feed/",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T2",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 120,
-      "tags": ["行业媒体", "技术"],
+      "tags": [
+        "行业媒体",
+        "技术"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
@@ -71,13 +92,18 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://www.textileworld.com/feed/",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T2",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 120,
-      "tags": ["行业媒体", "技术"],
+      "tags": [
+        "行业媒体",
+        "技术"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
@@ -87,13 +113,19 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://www.knittingindustry.com/feed/",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T2",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 120,
-      "tags": ["针织", "纱线", "技术"],
+      "tags": [
+        "针织",
+        "纱线",
+        "技术"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
@@ -103,13 +135,141 @@
       "kind": "rss",
       "config": {
         "feedUrl": "https://www.knittingtradejournal.com/feed/",
-        "_aihot": { "initialBackfillLimit": 8 }
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
       },
       "tier": "T2",
       "owner_entity_id": null,
       "participation_mode": "editorial",
       "interval_minutes": 120,
-      "tags": ["针织", "技术", "市场"],
+      "tags": [
+        "针织",
+        "技术",
+        "市场"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-pitti-filati",
+      "name": "Pitti Filati（官方新闻）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://filati.pittimmagine.com/en",
+        "parseMode": "html",
+        "itemSelector": "a[href*='/en/pittimmagine/archive/'][href*='/news/']",
+        "linkSelector": "a[href*='/en/pittimmagine/archive/'][href*='/news/']",
+        "titleSelector": "a[href*='/en/pittimmagine/archive/'][href*='/news/']",
+        "allowUrlPrefixes": [
+          "https://filati.pittimmagine.com/en/pittimmagine/archive/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "pitti-filati",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "官方",
+        "针织",
+        "纱线",
+        "趋势"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-woolmark-newsroom",
+      "name": "The Woolmark Company Newsroom（官方新闻）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.woolmark.com/industry/newsroom/",
+        "parseMode": "html",
+        "itemSelector": ".articleListItem-content",
+        "linkSelector": "a.articleListItem-linkOverlay",
+        "titleSelector": ".articleListItem-title",
+        "publishedAtSelector": ".articleListItem-date",
+        "allowUrlPrefixes": [
+          "https://www.woolmark.com/industry/newsroom/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        },
+        "publishedAtUtcOffset": "+00:00"
+      },
+      "tier": "T1",
+      "owner_entity_id": "woolmark",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "官方",
+        "针织",
+        "羊毛",
+        "可持续"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-premiere-vision-magazine",
+      "name": "Première Vision Magazine（官方趋势）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.premierevision.com/en/content/magazine",
+        "parseMode": "html",
+        "itemSelector": "article.itemcontent",
+        "linkSelector": "a.card-cliquable[href*='/en/articles/']",
+        "titleSelector": "h3.title",
+        "allowUrlPrefixes": [
+          "https://www.premierevision.com/en/articles/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "premiere-vision",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "官方",
+        "趋势",
+        "材料",
+        "设计"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-pantone-color",
+      "name": "Pantone Color Insights（官方色彩）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.pantone.com/articles/color-of-the-year",
+        "parseMode": "html",
+        "itemSelector": "article",
+        "linkSelector": "a.mb-1[href*='/articles/color-of-the-year/']",
+        "titleSelector": "a.mb-1[href*='/articles/color-of-the-year/']",
+        "allowUrlPrefixes": [
+          "https://www.pantone.com/articles/color-of-the-year/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "tags": [
+        "官方",
+        "色彩",
+        "趋势",
+        "纱线"
+      ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     }

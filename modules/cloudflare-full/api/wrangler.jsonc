@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../node_modules/wrangler/config-schema.json",
+  "name": "knit-hot-api",
+  "account_id": "6e4e1f26f98366c93187ba53f375f46b",
+  "main": ".build/worker.js",
+  "no_bundle": true,
+  "build": { "command": "node modules/cloudflare-full/api/build.mjs" },
+  "compatibility_date": "2026-10-16",
+  "compatibility_flags": ["nodejs_compat", "enable_nodejs_http_server_modules"],
+  "workers_dev": true,
+  "vars": {
+    "SITE_URL": "https://knit-hot-web.534569779.workers.dev", "AIHOT_DATA_DIR": "/tmp/knithot/data",
+    "COLLECT_ENABLED": "false", "MODEL_CALLS_ENABLED": "false",
+    "LLM_BASE_URL": "https://api.minimax.cn/v1", "LLM_MODEL": "MiniMax-M3",
+    "LLM_EXTRA_JSON": "{\"thinking\":{\"type\":\"disabled\"},\"reasoning_split\":true}",
+    "LLM_JSON_MODE": "false", "LLM_REASONING_TOKENS": "0"
+  },
+  "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "a990bacb3c274caf94b482c6a6a800d0" }],
+  "services": [{ "binding": "MEDIA", "service": "knit-hot-media" }],
+  "observability": { "enabled": true }
+}

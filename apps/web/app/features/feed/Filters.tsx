@@ -1,7 +1,7 @@
 // Feed filters: the channel and category choice (a row of tabs on desktop, a sheet behind the bar's filter
 // button on phones), the phone bar of 精选 and 全部, and search.
 import { useEffect, useRef, useState } from "react";
-import { Form, Link, useNavigation, useSearchParams } from "react-router";
+import { Form, Link, useLocation, useNavigation, useSearchParams } from "react-router";
 import { CATEGORY_KEYS, CATEGORY_LABELS, CHANNEL_LABELS, type CategoryKey, type ChannelKey } from "@aihot/contracts/taxonomy";
 import { SITE } from "@aihot/site";
 import { IconCheck, IconClose, IconFilter, IconSearch } from "../../components/icons";
@@ -54,6 +54,8 @@ export function CategoryTabs({ base, category, channel = "all", layoutId, classN
 export function FeedBar({ base, category, channel }: { base: "/" | "/all"; category: CategoryKey | null; channel: ChannelKey }) {
   const [params] = useSearchParams();
   const [sheet, setSheet] = useState(false);
+  const location = useLocation();
+  useEffect(() => setSheet(false), [location.key]);
   const scope = (to: string) => hrefWith(to, params, { q: null, tab: null, search: null });
   const filtered = filterKey(category, channel) !== "all";
   return (
@@ -103,7 +105,6 @@ function FilterSheet({ open, onClose, base, active }: { open: boolean; onClose: 
             <li key={o.key}>
               <Link
                 to={o.to}
-                onClick={onClose}
                 aria-current={on ? "true" : undefined}
                 className={`-mx-2 flex h-12 items-center justify-between rounded-tile px-2 text-[16px] transition-colors active:bg-bg-sunk ${on ? "font-semibold text-accent" : "text-ink"}`}
               >

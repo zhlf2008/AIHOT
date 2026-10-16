@@ -47,7 +47,10 @@ export const { shouldRevalidate } = reuse;
 export async function clientLoader(args: ClientLoaderFunctionArgs) {
   const { params } = args;
   const preview = isPhone() && params.id ? takePreview(params.id) : null;
-  if (!preview) return reuse.clientLoader(args);
+  // WebKit can retain a deferred phone preview through a history transition. Await its detail;
+  // other engines keep the immediate card preview, and every engine keeps intent-prefetched data.
+  const webkit = /AppleWebKit/.test(navigator.userAgent) && !/Chrome|Chromium|Edg\//.test(navigator.userAgent);
+  if (!preview || webkit) return reuse.clientLoader(args);
   return { item: null, preview, detail: reuse.clientLoader(args) } satisfies Preview;
 }
 clientLoader.hydrate = true as const;

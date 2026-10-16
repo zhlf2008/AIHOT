@@ -1,0 +1,13 @@
+import { fileURLToPath } from "node:url";
+import { access } from "node:fs/promises";
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
+const run = promisify(exec);
+const root = fileURLToPath(new URL("../../../", import.meta.url));
+await run("npx react-router build --config modules/cloudflare-full/web/vite.config.ts", { cwd: root });
+const target = fileURLToPath(new URL("./.build", import.meta.url));
+const moduleRoot = fileURLToPath(new URL("..", import.meta.url));
+if (!target.startsWith(moduleRoot)) throw new Error(`refusing build output outside module: ${target}`);
+await access(`${target}/server/index.js`);
+await access(`${target}/client`);
+console.log(`Cloudflare web build ready at ${target}`);

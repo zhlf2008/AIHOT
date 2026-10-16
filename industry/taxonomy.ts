@@ -110,6 +110,8 @@ export const TOPIC_TAGS = [
   "染整",
   "横机",
   "圆机",
+  "经编",
+  "纬编",
   "手工针织",
   "数字针织",
   "供应链",
@@ -129,6 +131,8 @@ export const ENTITY_TAGS = [
   "CFDA",
   "中国纺织工业联合会",
   "国际羊毛局",
+  "Pitti Filati",
+  "Stoll",
   "Nike",
   "Adidas",
 ] as const;

@@ -95,6 +95,20 @@
       "definition": "adidas 针织产品、运动材料、设计合作与商业化动态。"
     },
     {
+      "slug": "pitti-filati",
+      "name": "Pitti Filati",
+      "group": "company",
+      "entityId": "pitti-filati",
+      "definition": "Pitti Filati 纱线展的针织纱线、色彩、材料和供应商趋势。"
+    },
+    {
+      "slug": "stoll",
+      "name": "Stoll / 斯托尔",
+      "group": "company",
+      "entityId": "stoll",
+      "definition": "Stoll 横机、数字针织系统和针织制造技术动态。"
+    },
+    {
       "slug": "runway-trends",
       "name": "秀场趋势",
       "group": "field",

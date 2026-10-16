@@ -146,10 +146,14 @@ const SUBSTITUTED = /\$\{([A-Z][A-Z0-9_]+)|\{\$([A-Z][A-Z0-9_]+)\}/g;
 const COMPOSE = "docker-compose.yml";
 const DEPLOYMENT = [COMPOSE, "deploy/Caddyfile"].filter((file) => existsSync(path.join(ROOT, file)));
 const tracked = (pattern: string) => execFileSync("git", ["ls-files", "--", pattern], { cwd: ROOT, encoding: "utf8" }).split("\n").filter(Boolean);
+// Worker resources are objects supplied by the platform, declared as bindings rather than .env strings.
+const bindings = (value: unknown): string[] => !value || typeof value !== "object" ? []
+  : Object.entries(value).flatMap(([key, child]) => key === "binding" && typeof child === "string" ? [child] : bindings(child));
 
 test("every environment variable the code reads is listed in a template, and every listed one is read", () => {
   const listed = new Set(tracked("*.env.example").flatMap((file) => assigned(file, /^#?\s*([A-Z][A-Z0-9_]+)=/gm)));
   const preset = new Set([
+    ...tracked("*/wrangler.jsonc").flatMap((file) => bindings(JSON.parse(readFileSync(path.join(ROOT, file), "utf8")))),
     ...(DEPLOYMENT.includes(COMPOSE) ? assigned(COMPOSE, /^\s+([A-Z][A-Z0-9_]+):\s/gm) : []),
     ...tracked("*.service").flatMap((unit) => assigned(unit, /^Environment="?([A-Z][A-Z0-9_]+)=/gm)),
   ]);

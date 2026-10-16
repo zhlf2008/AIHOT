@@ -4,6 +4,8 @@
 
 **在线访问：[针织时尚 HOT](https://knit-fashion-hot.534569779.workers.dev)** · [RSS 订阅](https://knit-fashion-hot.534569779.workers.dev/feed.xml)
 
+**原引擎中文版预览：[全部动态](https://knit-hot-web.534569779.workers.dev/all)**。已连接 Supabase，原网页、公开读取、真实 MiniMax 中文编辑和 Cloudflare Workflows 已跑通。后台、图片存储和完整成刊链路仍在分阶段验收；旧版入口继续保留。[完整适配进度](docs/cloudflare-full.md)。
+
 关注五条主线：**秀场与趋势、纱线与色彩、针织与工艺、品牌与市场、可持续材料**。
 
 ## Cloudflare 版本
@@ -28,7 +30,7 @@ npm run cf:check
 
 ## 保留的 AI 精编框架
 
-原 React Router + Fastify + PostgreSQL + pg-boss 引擎仍保留。`site/` 已替换为本站品牌；`industry/` 已改为针织行业词表、主题、信源和模型提示词。保留双次独立评分、中文写作、事件聚合、日报周报月报、后台与 MCP 等原框架能力，需配置模型 API 密钥和 PostgreSQL；这些能力目前不在 Cloudflare 轻量版中启用。[服务器部署](docs/deploy.md)。
+原 React Router + Fastify + PostgreSQL + pg-boss 引擎仍保留。`site/` 已替换为本站品牌；`industry/` 已改为针织行业词表、主题、信源和模型提示词。`modules/cloudflare-full/` 将原网页、Fastify 公开路由、采集、双次独立评分、中文写作与持久任务队列适配到 Workers + Workflows + Hyperdrive + Supabase，不以静态链接目录替代原引擎。[CF 适配](docs/cloudflare-full.md)，[原服务器部署](docs/deploy.md)。
 
 评分门槛保留上游数值，尚待针织行业人工样本重新校准，不声称已达到精选准确率。行业示例是评测 fixture，不作为线上新闻。原引擎的 category key 为兼容保持不变，显示标签已替换为针织行业。
 
@@ -37,6 +39,7 @@ npm run cf:check
 | 路径 | 用途 |
 |---|---|
 | `modules/cloudflare/` | Cloudflare 前端、Worker、D1 迁移、解析与集成测试 |
+| `modules/cloudflare-full/` | 原引擎的 CF 网页、API、工作流及并发/队列适配测试 |
 | `industry/source-directory.json` | Cloudflare 全球信源与采集配置 |
 | `industry/sources.json` | PostgreSQL 原框架初始 RSS 来源 |
 | `industry/taxonomy.ts`、`topics.json`、`prompts/` | 针织分类、主题与行业判断标准 |

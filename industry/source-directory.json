@@ -52,7 +52,7 @@
     "collection": "web",
     "list": {
       "url": "https://www.premierevision.com/en/content/magazine",
-      "linkSelector": "a[href*='/en/articles/']",
+      "linkSelector": "a.card-cliquable[href*='/en/articles/']",
       "urlIncludes": "/en/articles/"
     },
     "verifiedAt": "2026-10-16"
@@ -174,7 +174,7 @@
     "collection": "web",
     "list": {
       "url": "https://www.pantone.com/articles/color-of-the-year",
-      "linkSelector": "a[href*='/articles/color-of-the-year/']",
+      "linkSelector": "a.mb-1[href*='/articles/color-of-the-year/']",
       "urlIncludes": "/articles/color-of-the-year/"
     },
     "verifiedAt": "2026-10-16"
