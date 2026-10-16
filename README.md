@@ -2,6 +2,8 @@
 
 **从一根纱，看见下一季。** 面向针织服装设计师、买手与研发团队的全球趋势及产业资讯项目，基于 [AIHOT](https://github.com/KKKKhazix/AIHOT) 开源框架改造。
 
+**在线访问：[针织时尚 HOT](https://knit-fashion-hot.534569779.workers.dev)** · [RSS 订阅](https://knit-fashion-hot.534569779.workers.dev/feed.xml)
+
 关注五条主线：**秀场与趋势、纱线与色彩、针织与工艺、品牌与市场、可持续材料**。
 
 ## Cloudflare 版本

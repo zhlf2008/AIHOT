@@ -2,6 +2,8 @@
 
 针织时尚 HOT 的 Cloudflare 版位于 `modules/cloudflare/`，使用 Workers 静态资源、D1 与 Cron Triggers，无需常驻服务器。保留的 React Router / Fastify / PostgreSQL 版本按 `docs/deploy.md` 部署。两个版本使用同一信源目录，但数据分别存储，不自动同步。
 
+当前生产地址：<https://knit-fashion-hot.534569779.workers.dev>。2026-10-16 首次发布，已创建 `knithot-db` 并将真实数据库 ID 写入配置；此账号后续更新直接执行迁移和发布，不要重复创建数据库。生产 `COLLECT_ENABLED=true`，本地默认仍关闭。
+
 ## 功能边界
 
 | 功能 | Cloudflare 版 | PostgreSQL 原框架 |
