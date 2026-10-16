@@ -16,6 +16,9 @@
     "fflate": "0.7.5"
   },
   "scripts": {
+    "cf:dev": "npm run db:local -w @knithot/cloudflare && npm run dev -w @knithot/cloudflare",
+    "cf:check": "npm run check -w @knithot/cloudflare && npm run test -w @knithot/cloudflare && npm run build -w @knithot/cloudflare",
+    "cf:deploy": "npm run deploy -w @knithot/cloudflare",
     "db:migrate": "node --env-file-if-exists=.env scripts/migrate.ts",
     "dev:api": "npm run dev -w @aihot/api",
     "dev:worker": "npm run dev -w @aihot/worker",
