@@ -43,6 +43,11 @@ export function platformPlugin({ readOnlyApi = false, edgeFetch = false, edgeQue
       source = replaceOnce(source, '  const svg = await satori(await tree() as never, { ...size, fonts: await fonts() });', "");
       return { contents: replaceOnce(source, '  const png = await sharp(Buffer.from(svg)).png(OG_PNG).toBuffer();', '  const png = await renderRemotePng(await tree(), size);'), loader: "ts" };
     });
+    if (edgeOg) b.onLoad({ filter: /packages[\\/]backend[\\/]src[\\/]media[\\/]poster\.ts$/ }, async args => {
+      // Sources on this deployment permit public summaries, not full-text redistribution.
+      const source = replaceOnce(await readFile(args.path, "utf8"), "阅读全文、中文译文与原文链接", "阅读中文摘要与原文链接");
+      return { contents: replaceOnce(source, "poster-2026-09-29.1", "poster-knithot-2026-10-16.1"), loader: "ts" };
+    });
     if (edgeFetch) b.onLoad({ filter: /packages[\\/]backend[\\/]src[\\/]lib[\\/]http-fetch\.ts$/ }, async args => {
       const source = await readFile(args.path, "utf8");
       const start = source.indexOf("import net from");

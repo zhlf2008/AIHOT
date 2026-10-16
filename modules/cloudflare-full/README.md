@@ -8,4 +8,4 @@
 
 `media/` 是不开放 workers.dev 的私有 WASM 服务，通过 Workflow 执行较重处理，KV 保存衍生图与管理员联系人图片；只随包加载字体。原 OG/海报模板和签名代理路由继续复用，光栅转换有边缘内存限制。
 
-当前原引擎中文版预览：<https://knit-hot-web.534569779.workers.dev/all>。后台已接入，普通分享图及签名图片代理已验证；手机海报仍受免费 CPU 限制，尚未替换旧版正式站。完整部署、阀门、预算、实测与待验收项见 [部署记录](../../docs/cloudflare-full.md)。
+正式入口：<https://knit-fashion-hot.534569779.workers.dev/all>。使用者已开通 Workers Paid；普通分享图、1080×1440 手机海报、签名图片代理、后台与真实 12 项批处理均已在线验证。完整部署、阀门、预算、实测与待验收项见 [部署记录](../../docs/cloudflare-full.md)。

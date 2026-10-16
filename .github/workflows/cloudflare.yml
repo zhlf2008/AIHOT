@@ -20,8 +20,11 @@ jobs:
           package-manager-cache: false
       - run: npm ci --no-audit --no-fund
       - run: npm run cf:check
+      - run: npm run cf:full:build
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # The Supabase schema and billing plan must be reviewed before deployment.
+    # Keep production releases explicit; never overwrite the full site with the D1 index.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     needs: check
     runs-on: ubuntu-latest
     environment: production
@@ -32,10 +35,13 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - run: npm ci --no-audit --no-fund
-      - name: Migrate and deploy
+      - name: Deploy full Cloudflare runtime
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          npm run db:remote -w @knithot/cloudflare
-          npm run cf:deploy
+          npm run cf:full:deploy:media
+          npm run cf:full:deploy:api
+          npm run cf:full:deploy:web
+          npx wrangler deploy --config modules/cloudflare-full/jobs/wrangler.jsonc --var COLLECT_ENABLED:true --var MODEL_CALLS_ENABLED:true
+          npm run cf:full:deploy:production

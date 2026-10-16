@@ -1,10 +1,10 @@
 # Cloudflare 部署
 
-本文记录最初的 D1 索引站。原引擎中文版已另行适配到 Workers + Workflows + Supabase，进度与部署入口见 [原引擎 CF 适配](cloudflare-full.md)。
+本文记录最初的 D1 索引站及显式回退操作。正式站已升级为 Workers + Workflows + Supabase；正常部署见 [原引擎 CF 适配](cloudflare-full.md)，不要用旧命令覆盖正式入口。
 
 针织时尚 HOT 的 Cloudflare 版位于 `modules/cloudflare/`，使用 Workers 静态资源、D1 与 Cron Triggers，无需常驻服务器。保留的 React Router / Fastify / PostgreSQL 版本按 `docs/deploy.md` 部署。两个版本使用同一信源目录，但数据分别存储，不自动同步。
 
-当前生产地址：<https://knit-fashion-hot.534569779.workers.dev>。2026-10-16 首次发布，已创建 `knithot-db` 并将真实数据库 ID 写入配置；此账号后续更新直接执行迁移和发布，不要重复创建数据库。生产 `COLLECT_ENABLED=true`，本地默认仍关闭。
+旧版归档地址：<https://knit-fashion-hot-legacy.534569779.workers.dev>，自动采集关闭。2026-10-16 创建的 `knithot-db` 保留，不要重复创建。默认旧配置 `wrangler.jsonc` 中的生产名称和两小时 Cron 仅供明确回退；归档部署使用 `wrangler.archive.jsonc`，不会覆盖正式站。
 
 ## 功能边界
 
@@ -39,7 +39,7 @@ npm run cf:check
 2. 在仓库根目录执行 `npx wrangler d1 create knithot-db`。将返回的真实 `database_id` 填入 `modules/cloudflare/wrangler.jsonc`，替换占位 UUID。多账号时设置 `CLOUDFLARE_ACCOUNT_ID`。
 3. 执行 `npm run db:remote -w @knithot/cloudflare`，创建新 D1 表。本目录迁移仅适用于新建的 SQLite 数据库，与原框架 PostgreSQL 迁移分开。
 4. 可选首次采集：`npm run bootstrap -w @knithot/cloudflare`。脚本直接核对公开来源，生成忽略提交的 `.data/knit-bootstrap.sql` 与核验报告。这不是自动测试，不调用模型；来源请求失败会记录原因。随后在 `modules/cloudflare` 执行 `npx wrangler d1 execute knithot-db --remote --file ../../.data/knit-bootstrap.sql` 导入真实初始资讯。
-5. 执行 `npm run cf:deploy`。发布命令只在远端启用 `COLLECT_ENABLED=true`，本地配置保持关闭。Wrangler 返回实际 `workers.dev` 地址；检查首页、`/api/health`、`/api/stats`、`/feed.xml`。
+5. 执行 `npm run cf:legacy:deploy` 发布归档版，保持采集关闭。Wrangler 返回实际 `workers.dev` 地址；检查首页、`/api/health`、`/api/stats`、`/feed.xml`。如明确回退到旧生产入口，按完整部署记录中的回退命令执行。
 
 部署前按真实运行方式确认隐私与使用说明（Cloudflare 前端 `public/app.js` 内相关说明；PostgreSQL 版本 `site/pages/` 有独立模板）。不要将管理密钥放入静态资源或仓库。
 
@@ -53,7 +53,7 @@ UTC 每偶数小时的第 17 分钟执行，约每两小时一次；新 Cron 配
 
 ## 持续部署
 
-`.github/workflows/cloudflare.yml` 在 PR 做类型、D1 集成测试与构建；main 检查通过后发布。需要仓库 GitHub Actions 的 production 环境配置 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID`，以及已填写真实 D1 ID。令牌只授予该账号 Workers Scripts Edit、D1 Edit 与发布所需的账号读取权限。不要把密钥写入文件。
+`.github/workflows/cloudflare.yml` 检查旧版测试与完整运行时构建；正式发布仅从 main 手动触发，部署新版完整运行时。D1 归档不自动发布。具体权限与发布顺序见完整部署记录，不要把密钥写入文件。
 
 ## 公开接口
 

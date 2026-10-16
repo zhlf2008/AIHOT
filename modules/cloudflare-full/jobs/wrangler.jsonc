@@ -7,9 +7,10 @@
   "build": { "command": "node modules/cloudflare-full/jobs/build.mjs" },
   "compatibility_date": "2026-10-16",
   "compatibility_flags": ["nodejs_compat"],
+  "limits": { "cpu_ms": 30000 },
   "workers_dev": true,
   "vars": {
-    "SITE_URL": "https://knit-hot-web.534569779.workers.dev",
+    "SITE_URL": "https://knit-fashion-hot.534569779.workers.dev",
     "AIHOT_DATA_DIR": "/tmp/knithot/data",
     "COLLECT_ENABLED": "false",
     "MODEL_CALLS_ENABLED": "false",

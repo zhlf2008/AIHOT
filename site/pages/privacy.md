@@ -16,7 +16,7 @@ Cloudflare 提供网站托管、内容分发与基础网络防护，可能处理
 
 ## 更正与反馈
 
-当前 CF 预览版本通过 [GitHub Issues](https://github.com/zhlf2008/AIHOT/issues) 接收更正与删除请求。GitHub Issues 通常公开可见，请只提交处理问题所需的信息，避免填写密钥或个人敏感资料。站内反馈上传功能仍在适配，启用前会更新相应说明。
+本站通过 [GitHub Issues](https://github.com/zhlf2008/AIHOT/issues) 接收更正与删除请求。GitHub Issues 通常公开可见，请只提交处理问题所需的信息，避免填写密钥或个人敏感资料。站内反馈上传功能未开放，启用前会更新相应说明。
 
 ## 第三方来源
 

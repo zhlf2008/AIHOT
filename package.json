@@ -18,10 +18,12 @@
   "scripts": {
     "cf:dev": "npm run db:local -w @knithot/cloudflare && npm run dev -w @knithot/cloudflare",
     "cf:check": "npm run check -w @knithot/cloudflare && npm run test -w @knithot/cloudflare && npm run build -w @knithot/cloudflare",
-    "cf:deploy": "npm run deploy -w @knithot/cloudflare",
+    "cf:deploy": "npm run cf:full:deploy:production",
+    "cf:legacy:deploy": "npm run deploy -w @knithot/cloudflare",
     "cf:full:build": "node modules/cloudflare-full/api/build.mjs && node modules/cloudflare-full/web/build.mjs && node modules/cloudflare-full/jobs/build.mjs",
     "cf:full:deploy:api": "wrangler deploy --config modules/cloudflare-full/api/wrangler.jsonc",
     "cf:full:deploy:web": "node modules/cloudflare-full/web/build.mjs && wrangler deploy --config modules/cloudflare-full/web/wrangler.jsonc",
+    "cf:full:deploy:production": "node modules/cloudflare-full/web/build.mjs && wrangler deploy --config modules/cloudflare-full/web/wrangler.production.jsonc",
     "cf:full:deploy:jobs": "wrangler deploy --config modules/cloudflare-full/jobs/wrangler.jsonc",
     "cf:full:deploy:media": "wrangler deploy --config modules/cloudflare-full/media/wrangler.jsonc",
     "db:migrate": "node --env-file-if-exists=.env scripts/migrate.ts",

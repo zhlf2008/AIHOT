@@ -4,15 +4,19 @@
 
 **在线访问：[针织时尚 HOT](https://knit-fashion-hot.534569779.workers.dev)** · [RSS 订阅](https://knit-fashion-hot.534569779.workers.dev/feed.xml)
 
-**原引擎中文版预览：[全部动态](https://knit-hot-web.534569779.workers.dev/all)**。已连接 Supabase，原网页、公开读取、真实 MiniMax 中文编辑和 Cloudflare Workflows 已跑通。后台、图片存储和完整成刊链路仍在分阶段验收；旧版入口继续保留。[完整适配进度](docs/cloudflare-full.md)。
+**[查看中文动态](https://knit-fashion-hot.534569779.workers.dev/all)**。正式入口已切换到 Workers + Workflows + Supabase 原引擎适配版，支持站内详情、中文整理、主题、搜索、收藏、后台、RSS、API、MCP 与手机分享海报。Workers Paid 已由使用者开通，最低 $5/月；所有模型步骤合计最多 180 次/滚动 24 小时。日报等待建站后的首个真实出刊窗口，不强行制造精选。[部署与验收记录](docs/cloudflare-full.md)。
 
 关注五条主线：**秀场与趋势、纱线与色彩、针织与工艺、品牌与市场、可持续材料**。
 
-## Cloudflare 版本
+## Cloudflare 完整版本
 
-使用 Cloudflare Workers + D1 + Cron Triggers，提供杂志风格响应式首页、资讯索引、分类与搜索、时间筛选、阅读简报、本机收藏、全球信源目录、RSS 和只读 JSON API。标题与短摘要保留原文；没有发布日期的条目清楚标明收录时间。
+使用 Workers 承载原网页与后台，Workflows 每 10 分钟接续采集、预筛、双评分、中文编辑与事件任务，Hyperdrive 连接 Supabase 私有数据库。来源默认仅公开中文标题、摘要与原文链接；站内阅读不代表转载全文。部署步骤见 [完整 CF 部署](docs/cloudflare-full.md)。
 
 全球目录收录 22 个来源，包括 Pitti Filati、Woolmark、Première Vision、SPINEXPO、SHIMA SEIKI、STOLL、Textile Exchange、Cotton Incorporated、Pantone、Lenzing、Vogue Runway、WWD、BoF、Knitting Industry 等。已接入的 RSS/网页列表与原站阅读入口分别标明，来源状态以实际采集结果为准。[信源核验记录](docs/knit-sources.md)。
+
+### 旧版索引与回退
+
+旧 D1 索引站保留在 [回退地址](https://knit-fashion-hot-legacy.534569779.workers.dev)，保留原数据，关闭自动采集。以下命令用于旧版本机开发；旧版部署使用 `npm run cf:legacy:deploy`，不会覆盖正式站。
 
 ```powershell
 # Node.js >= 24.11
@@ -26,7 +30,7 @@ npm run cf:dev
 npm run cf:check
 ```
 
-首次在 Cloudflare 创建 D1、填写数据库 ID、迁移后执行 `npm run cf:deploy`。完整步骤及 GitHub Actions 自动部署配置见 **[Cloudflare 部署](docs/cloudflare.md)**。密钥通过本机登录或 GitHub Secrets 配置，不写入仓库。
+旧版 D1 部署及回退说明见 [旧版部署](docs/cloudflare.md)。GitHub Actions 先检查，正式发布仅由 main 的手动工作流触发，部署完整运行时。密钥通过本机登录或 GitHub Secrets 配置，不写入仓库。
 
 ## 保留的 AI 精编框架
 
