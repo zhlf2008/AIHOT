@@ -73,7 +73,7 @@
   {
     "id": "shima-seiki",
     "name": "SHIMA SEIKI",
-    "url": "https://www.shima-seiki.com/news/",
+    "url": "https://www.shimaseiki.com/news/",
     "region": "Asia",
     "language": "en",
     "category": "technology",
@@ -81,7 +81,7 @@
     "description": "日本电脑横编设备、软件和针织产品技术动态。",
     "access": "open",
     "collection": "directory",
-    "verifiedAt": "2026-10-16"
+    "verifiedAt": "2026-10-17"
   },
   {
     "id": "stoll",
@@ -315,5 +315,31 @@
     "collection": "rss",
     "feedUrl": "https://theindustry.fashion/feed/",
     "verifiedAt": "2026-10-16"
+  },
+  {
+    "id": "eu-textiles",
+    "name": "European Commission · Textiles",
+    "url": "https://environment.ec.europa.eu/strategy/textiles-strategy_en",
+    "region": "Europe",
+    "language": "en",
+    "category": "sustainability",
+    "tier": "official",
+    "description": "欧盟官方纺织与循环政策，已核验文章以 CC BY 4.0 许可提供站内正文。",
+    "access": "open",
+    "collection": "directory",
+    "verifiedAt": "2026-10-17"
+  },
+  {
+    "id": "eea-textiles",
+    "name": "European Environment Agency · Textiles",
+    "url": "https://www.eea.europa.eu/en/topics/in-depth/textiles",
+    "region": "Europe",
+    "language": "en",
+    "category": "sustainability",
+    "tier": "official",
+    "description": "欧洲环境署纺织消费与循环研究，已核验文章以 CC BY 4.0 许可提供站内正文。",
+    "access": "open",
+    "collection": "directory",
+    "verifiedAt": "2026-10-17"
   }
 ]

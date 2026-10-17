@@ -1,6 +1,6 @@
 # 针织服装潮流信源核验记录
 
-核验日期：2026-10-16。`industry/source-directory.json` 收录 22 个全球来源；`industry/sources.json` 配置 7 个 RSS 与 4 个官方网页列表，共 11 个采集源，全部 `site_fulltext` 和 `syndicate_fulltext` 为 `false`。初版索引采集曾解析全部 11 源；原引擎及 CF 批处理复核为 10 源成功、Textile World 超时，不能把配置接入或单次成功当成长久可用。
+核验日期：2026-10-16，许可补核：2026-10-17。`industry/source-directory.json` 收录 24 个全球来源；`industry/sources.json` 配置 7 个 RSS 与 6 个官方网页列表，共 13 个采集源。原有 11 源保持 `site_fulltext=false`；新增欧盟委员会和欧洲环境署仅对逐篇核验的开放许可文字开启站内全文，全文 RSS 均关闭。详见 [24 源逐项许可记录](fulltext-rights.md)。初版索引采集曾解析原 11 源；原引擎及 CF 批处理复核为 10 源成功、Textile World 超时，配置接入或单次成功并非长久可用保证。
 
 ## 已验证、可直接采集
 

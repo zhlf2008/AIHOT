@@ -10,9 +10,9 @@
 
 ## Cloudflare 完整版本
 
-使用 Workers 承载原网页与后台，Workflows 每 10 分钟接续采集、预筛、双评分、中文编辑与事件任务，Hyperdrive 连接 Supabase 私有数据库。来源默认仅公开中文标题、摘要与原文链接；站内阅读不代表转载全文。部署步骤见 [完整 CF 部署](docs/cloudflare-full.md)。
+使用 Workers 承载原网页与后台，Workflows 每 10 分钟接续采集、预筛、双评分、中文编辑与事件任务，Hyperdrive 连接 Supabase 私有数据库。来源默认仅公开中文标题、摘要与原文链接；欧盟委员会和欧洲环境署已核验许可的文章支持站内正文，入选文章后台生成中文全文翻译。正文附来源、许可与翻译说明，省略第三方图片和嵌入媒体。[逐源许可核对](docs/fulltext-rights.md)。部署步骤见 [完整 CF 部署](docs/cloudflare-full.md)。
 
-全球目录收录 22 个来源，包括 Pitti Filati、Woolmark、Première Vision、SPINEXPO、SHIMA SEIKI、STOLL、Textile Exchange、Cotton Incorporated、Pantone、Lenzing、Vogue Runway、WWD、BoF、Knitting Industry 等。已接入的 RSS/网页列表与原站阅读入口分别标明，来源状态以实际采集结果为准。[信源核验记录](docs/knit-sources.md)。
+全球目录收录 24 个来源，包括 Pitti Filati、Woolmark、Première Vision、SPINEXPO、SHIMA SEIKI、STOLL、Textile Exchange、Cotton Incorporated、Pantone、Lenzing、Vogue Runway、WWD、BoF、Knitting Industry，以及欧盟委员会和欧洲环境署。原引擎配置 13 个自动采集源；已接入的 RSS/网页列表与原站阅读入口分别标明，来源状态以实际采集结果为准。[信源核验记录](docs/knit-sources.md)。
 
 ### 旧版索引与回退
 

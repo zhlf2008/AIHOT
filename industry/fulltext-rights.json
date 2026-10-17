@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-17",
+  "sources": {
+    "web-eu-textiles": {
+      "owner": "European Union / European Commission",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "evidenceUrl": "https://commission.europa.eu/legal-notice_en",
+      "urls": [
+        "https://environment.ec.europa.eu/news/ban-destruction-unsold-clothes-and-shoes-enters-application-2026-07-17_en",
+        "https://environment.ec.europa.eu/news/exploring-textiles-and-circular-economy-study-recommends-tools-assess-and-address-unintended-effects-2025-12-03_en"
+      ]
+    },
+    "web-eea-textiles": {
+      "owner": "European Environment Agency (EEA)",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "evidenceUrl": "https://www.eea.europa.eu/en/legal-notice",
+      "urls": [
+        "https://www.eea.europa.eu/en/newsroom/news/consumption-of-clothing-footwear-other-textiles-in-the-eu-reaches-new-record-high",
+        "https://www.eea.europa.eu/en/analysis/publications/circularity-of-the-eu-textiles-value-chain-in-numbers"
+      ]
+    }
+  }
+}

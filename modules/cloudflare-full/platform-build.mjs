@@ -31,6 +31,13 @@ export function platformPlugin({ readOnlyApi = false, edgeFetch = false, edgeQue
     if (readOnlyApi) b.onLoad({ filter: /apps[\\/]api[\\/]src[\\/]routes[\\/]site\.ts$/ }, async args => ({
       contents: replaceOnce(replaceOnce(await readFile(args.path, "utf8"), 'import { registerFeedback } from "./feedback.ts";', ""), "registerFeedback(app);", ""), loader: "ts",
     }));
+    if (readOnlyApi) b.onLoad({ filter: /packages[\\/]backend[\\/]src[\\/]publication[\\/]detail\.ts$/ }, async args => {
+      let source = replaceOnce(await readFile(args.path, "utf8"), 'import type { OutlineEntry, SiteItemDetail, StoryRef } from "@aihot/contracts/site";',
+        `import type { OutlineEntry, SiteItemDetail, StoryRef } from "@aihot/contracts/site";\nimport { licensedBody } from ${JSON.stringify(path.join(here, "api/licensed-body.ts"))};`);
+      source = replaceOnce(source, "interface DetailRow extends ItemRow {", "interface DetailRow extends ItemRow {\n  source_id: string;");
+      source = replaceOnce(source, 'SELECT ${ITEM_COLUMNS}, a.body_html', 'SELECT ${ITEM_COLUMNS}, p.source_id, a.body_html');
+      return { contents: replaceOnce(source, "  return row ?? null;", `  if (row?.body_mode === "full") {\n    row.body_html = licensedBody(row.body_html, row.source_id, row.url);\n    row.tr_html = licensedBody(row.tr_html, row.source_id, row.url, true);\n  }\n  return row ?? null;`), loader: "ts" };
+    });
     if (edgeAdmin) b.onLoad({ filter: /packages[\\/]backend[\\/]src[\\/]admin[\\/]settings\.ts$/ }, async args => {
       const source = replaceOnce(await readFile(args.path, "utf8"), 'import sharp from "sharp";', "");
       const storage = replaceOnce(source, 'import { mkdir, writeFile } from "node:fs/promises";', `import { mkdir, writeFile } from ${JSON.stringify(path.join(here, "api/storage-files.ts"))};\nimport { imageMetadata } from ${JSON.stringify(path.join(here, "api/images.ts"))};`);

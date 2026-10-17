@@ -6,6 +6,7 @@ import { registerNotifyJobs } from "@aihot/backend/jobs/notify";
 import { getBoss, recordRun } from "@aihot/backend/jobs/queue";
 import { scheduleDueSources } from "@aihot/backend/sources/collect";
 import { sweepUnprocessed } from "@aihot/backend/jobs/content";
+import { translatePending } from "@aihot/backend/editorial/translate";
 import { recoverStaleWork } from "@aihot/backend/operations/recover";
 import { computeHotRanking, snapshotHeat } from "@aihot/backend/events/hot";
 import { linkRelatedStories } from "@aihot/backend/events/consolidate";
@@ -37,6 +38,11 @@ export async function prepareBatch() {
 export async function processNextJob(cursor = 0) {
   await registerBatchHandlers();
   return runOneQueuedJob(cursor);
+}
+
+/** Reuse the engine's selection, licence, revision and receipt gates for one item per batch. */
+export async function translatePendingContent() {
+  return recordRun("content.translate", () => translatePending({ limit: 1, budgetMs: 4 * 60_000 }));
 }
 
 export async function refreshPublications() {

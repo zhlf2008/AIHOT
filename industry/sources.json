@@ -1,5 +1,5 @@
 {
-  "$comment": "针织服装潮流的稳定 RSS 采集源。官方展会、品牌与订阅媒体见 industry/source-directory.json；全文与转载均关闭。",
+  "$comment": "针织服装潮流信源；行业媒体默认摘要。仅逐篇核验的欧盟/EEA开放许可文字开启站内正文，详见fulltext-rights.json；全文RSS保持关闭。",
   "sources": [
     {
       "id": "rss-cotton-inc",
@@ -271,6 +271,80 @@
         "纱线"
       ],
       "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-eu-textiles",
+      "name": "欧盟委员会 · 纺织与循环政策",
+      "kind": "web_list",
+      "config": {
+        "url": "https://environment.ec.europa.eu/strategy/textiles-strategy_en",
+        "parseMode": "html",
+        "itemSelector": ".ecl-content-block__title a[href]",
+        "linkSelector": ".ecl-content-block__title a[href]",
+        "allowUrlPrefixes": [
+          "https://environment.ec.europa.eu/news/ban-destruction-unsold-clothes-and-shoes-enters-application-2026-07-17_en",
+          "https://environment.ec.europa.eu/news/exploring-textiles-and-circular-economy-study-recommends-tools-assess-and-address-unintended-effects-2025-12-03_en"
+        ],
+        "detail": {
+          "maxFetches": 2,
+          "titleSelector": "h1",
+          "titleAuthoritative": true,
+          "publishedAtSelector": "time[datetime]"
+        },
+        "_aihot": {
+          "initialBackfillLimit": 2,
+          "initialBackfillMonths": 24
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "tags": [
+        "官方",
+        "纺织",
+        "循环材料",
+        "开放许可"
+      ],
+      "site_fulltext": true,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-eea-textiles",
+      "name": "欧洲环境署 · 纺织循环研究",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.eea.europa.eu/en/topics/in-depth/textiles",
+        "parseMode": "html",
+        "itemSelector": "a[href*=\"/en/newsroom/news/\"], a[href*=\"/en/analysis/publications/\"]",
+        "linkSelector": "a[href*=\"/en/newsroom/news/\"], a[href*=\"/en/analysis/publications/\"]",
+        "allowUrlPrefixes": [
+          "https://www.eea.europa.eu/en/newsroom/news/consumption-of-clothing-footwear-other-textiles-in-the-eu-reaches-new-record-high",
+          "https://www.eea.europa.eu/en/analysis/publications/circularity-of-the-eu-textiles-value-chain-in-numbers"
+        ],
+        "detail": {
+          "maxFetches": 2,
+          "titleSelector": "h1",
+          "titleAuthoritative": true,
+          "publishedAtSelector": "time[datetime]"
+        },
+        "_aihot": {
+          "initialBackfillLimit": 2,
+          "initialBackfillMonths": 24
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "tags": [
+        "官方",
+        "纺织",
+        "循环材料",
+        "开放许可"
+      ],
+      "site_fulltext": true,
       "syndicate_fulltext": false
     }
   ]

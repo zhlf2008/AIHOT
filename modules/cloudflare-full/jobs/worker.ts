@@ -24,6 +24,8 @@ export class EditorialWorkflow extends WorkflowEntrypoint<Env, Params> {
       const limit = event.payload.maxJobs ?? 12;
       if (!Number.isInteger(limit) || limit < 1 || limit > 12) throw new Error("Batch size must be between 1 and 12");
       await step.do("schedule-and-recover-original-queues", { retries: { limit: 1, delay: "10 seconds" }, timeout: "3 minutes" }, () => runtime(this.env, async () => (await import("./batch.ts")).prepareBatch()));
+      // Finish selected reading before new editorial work consumes the shared budget.
+      const translation = await step.do("translate-one-selected-full-text-item", { retries: { limit: 0, delay: "10 seconds" }, timeout: "30 minutes" }, () => runtime(this.env, async () => (await import("./batch.ts")).translatePendingContent()));
       const jobs = [];
       for (let index = 0; index < limit; index++) {
         const job = await step.do(`original-queue-job-${index}`, { retries: { limit: 0, delay: "10 seconds" }, timeout: "10 minutes" }, () => runtime(this.env, async () => (await import("./batch.ts")).processNextJob(index)));
@@ -31,18 +33,25 @@ export class EditorialWorkflow extends WorkflowEntrypoint<Env, Params> {
         jobs.push(job);
       }
       const publication = await step.do("refresh-events-and-due-reports", { retries: { limit: 1, delay: "10 seconds" }, timeout: "10 minutes" }, () => runtime(this.env, async () => (await import("./batch.ts")).refreshPublications()));
-      return { jobs, publication };
+      return { jobs, publication, translation };
     }
     const articleId = await step.do("collect-one-real-item", { retries: { limit: 0, delay: "10 seconds" }, timeout: "2 minutes" }, () => runtime(this.env, async () => {
       const sourceId = event.payload.sourceId ?? "rss-knitting-industry";
-      const [source] = await sql`SELECT * FROM sources WHERE id=${sourceId} AND kind='rss' AND enabled=true`;
-      if (!source) throw new Error("Enabled RSS source not found");
+      const [source] = await sql`SELECT * FROM sources WHERE id=${sourceId} AND kind IN ('rss','web_list') AND enabled=true`;
+      if (!source) throw new Error("Enabled RSS or web source not found");
       const { fetchRss } = await import("@aihot/backend/sources/rss");
+      const { fetchWebList, fetchDetail } = await import("@aihot/backend/sources/web-list");
+      const { admitListing } = await import("@aihot/backend/sources/filters");
       const { upsertMaterial } = await import("@aihot/backend/content/materials");
-      const result = await fetchRss(source as never);
+      const candidates = admitListing(source.kind === "rss" ? (await fetchRss(source as never)).candidates : await fetchWebList(source as never), source as never);
       const index = event.payload.itemIndex ?? 0;
-      if (!Number.isInteger(index) || index < 0 || index > 7 || !result.candidates[index]) throw new Error("Source item index is outside the validation batch");
-      const candidate = result.candidates[index];
+      if (!Number.isInteger(index) || index < 0 || index > 7 || !candidates[index]) throw new Error("Source item index is outside the validation batch");
+      const candidate = candidates[index]!;
+      if (source.kind === "web_list") {
+        const detail = await fetchDetail(candidate.url, source as never, { date: !candidate.publishedAt, title: false, summary: true, body: true });
+        candidate.publishedAt ??= detail.publishedAt;
+        if (detail.body) Object.assign(candidate, { bodyHtml: detail.body.html, bodyText: detail.body.text, bodyStatus: "ok" });
+      }
       const material = await upsertMaterial({ ...candidate, sourceId, via: "import", backfill: "Cloudflare editorial validation" });
       console.log(JSON.stringify({ msg: "workflow real source item", articleId: material.articleId, sourceId, title: candidate.title }));
       return material.articleId;
@@ -53,12 +62,14 @@ export class EditorialWorkflow extends WorkflowEntrypoint<Env, Params> {
       if (!result?.output || result.needsBody) throw new Error("Source content needs body extraction before editorial validation");
       return { relevance: result.output.relevance, score: result.output.score, selected: result.output.selected };
     }));
+    await step.do("original-event-grouping", { retries: { limit: 0, delay: "10 seconds" }, timeout: "10 minutes" }, () => runtime(this.env, async () => (await import("@aihot/backend/events/group")).groupArticle(articleId)));
     await step.do("publish-through-original-projection", { retries: { limit: 1, delay: "10 seconds" }, timeout: "1 minute" }, () => runtime(this.env, async () => {
       const { publishArticle } = await import("@aihot/backend/publication/publish");
       await publishArticle(articleId);
       return { articleId };
     }));
-    return { articleId, ...editorial };
+    const translation = await step.do("translate-if-selected-and-licensed", { retries: { limit: 0, delay: "10 seconds" }, timeout: "30 minutes" }, () => runtime(this.env, async () => (await import("@aihot/backend/editorial/translate")).translateArticle(articleId)));
+    return { articleId, ...editorial, translation };
   }
 }
 
