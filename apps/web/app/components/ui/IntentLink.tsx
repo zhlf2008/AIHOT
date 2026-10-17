@@ -33,7 +33,9 @@ export function IntentLink({ onFocus, onBlur, onMouseEnter, onMouseLeave, onTouc
   };
   const cancel = () => { clear(); setReady(false); };
   useEffect(() => { cancel(); return clear; }, [props.to]);
-  return <><Link {...props} prefetch={shouldPrefetch ? "render" : "none"}
+  // A browser snapshot can retain the old article over a restored long list. Keep article
+  // navigation immediate; intent prefetch, page caching and return-position restoration remain.
+  return <><Link {...props} viewTransition={href.startsWith('/items/') ? false : props.viewTransition} prefetch={shouldPrefetch ? "render" : "none"}
     onFocus={(e) => { onFocus?.(e); if (!e.defaultPrevented) start(); }}
     onBlur={(e) => { onBlur?.(e); cancel(); }}
     onMouseEnter={(e) => { onMouseEnter?.(e); if (!e.defaultPrevented) start(); }}

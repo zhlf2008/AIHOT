@@ -32,13 +32,18 @@ const provider = await stub(async (_hit, request) => {
   }
   if (step === "structure" && count === 1) { active.structureAsked.open(); await active.structureAnswer.promise; }
   if (step === "understand" && active.writingAnswer) { active.writingAsked!.open(); await active.writingAnswer.promise; }
-  const content = step === "prefilter" ? { label: "PASS", reason: "AI model release" }
+  const content = step === "prefilter" ? { label: "PASS", reason: "Knitwear collection release" }
     : step === "score" ? { attentionScore: SELECTING_SCORE }
-      : step === "structure" ? { category: "ai-models", tags: ["模型发布"], subjects: [], fact: { title: "新模型发布" } }
-        : { itemType: "model_release", authorRole: "principal", tags: ["模型发布"], editorialJudgment: "模型有明确的能力提升", titleZh: `新模型发布 ${T}`, summaryZh: "模型发布并提供了评测和价格。" };
+      : step === "structure" ? { category: "ai-models", tags: ["系列发布"], subjects: [], fact: { title: "针织系列发布" } }
+        : { itemType: "model_release", authorRole: "principal", tags: ["系列发布"], editorialJudgment: "针织系列给出了明确的廓形和材料变化", titleZh: `针织系列发布 ${T}`, summaryZh: "针织系列公布了材料、工艺和价格信息。" };
   return { id: `stub-${active.calls.length}`, choices: [{ message: { content: JSON.stringify(content) } }], usage: { prompt_tokens: 10, completion_tokens: 10, total_tokens: 20 } };
 });
 const children = new Set<ReturnType<typeof spawn>>();
+
+function requestShutdown(child: ReturnType<typeof spawn>) {
+  if (process.platform === "win32") child.send({ shutdown: true });
+  else child.kill("SIGTERM");
+}
 
 function worker(queue: string) {
   const script = `
@@ -47,7 +52,7 @@ function worker(queue: string) {
     import { closeDb } from '@aihot/backend/db';
     QUEUES.analyze = process.env.TEST_ANALYZE_QUEUE;
     let stopping = false;
-    process.on('SIGTERM', async () => {
+    const shutdown = async () => {
       if (stopping) return;
       stopping = true;
       shutdownSignal.abort();
@@ -55,7 +60,9 @@ function worker(queue: string) {
       await stopBoss();
       await closeDb();
       process.disconnect();
-    });
+    };
+    process.on('SIGTERM', shutdown);
+    process.on('message', (message) => { if (message && message.shutdown) void shutdown(); });
     await registerContentJobs(await getBoss());
     process.send({ ready: true });
   `;
@@ -85,7 +92,7 @@ before(async () => {
 });
 after(async () => {
   active?.scoreAnswer.open(); active?.structureAnswer.open(); active?.writingAnswer?.open();
-  for (const child of children) child.kill("SIGTERM");
+  for (const child of children) requestShutdown(child);
   await provider.close(); await stopBoss(); await closeDb();
 });
 
@@ -95,13 +102,13 @@ test("SIGTERM during the final paid writing call still commits the complete anal
   const queue = `test.analyze-stop-${T}-final`;
   const boss = await getBoss();
   await boss.createQueue(queue, { policy: "short", retryLimit: 4, retryDelay: 1, expireInSeconds: 120 });
-  const { articleId } = await upsertMaterial({ sourceId: SOURCE, url: `https://example.org/analyze-stop-${T}/final`, title: `Final model release ${T}`,
-    bodyText: `A lab released a new AI model with benchmarks and prices. ${T} ` + "The release explains model capabilities and evaluation results. ".repeat(10),
+  const { articleId } = await upsertMaterial({ sourceId: SOURCE, url: `https://example.org/analyze-stop-${T}/final`, title: `Knitwear collection release ${T}`,
+    bodyText: `A brand released a new knitwear collection with material details and prices. ${T} ` + "The release explains yarn, stitch and fit details. ".repeat(10),
     bodyStatus: "ok", language: "en", via: "fetch", publishedAt: new Date() });
   const jobId = await boss.send(queue, { articleId }, { singletonKey: articleId });
   const running = worker(queue);
   await Promise.race([Promise.all([running.ready, active.writingAsked!.promise]), running.done.then(() => assert.fail("worker exited before writing"))]);
-  running.child.kill("SIGTERM"); await running.stopping;
+  requestShutdown(running.child); await running.stopping;
   active.writingAnswer!.open(); await running.done;
   assert.deepEqual(active.calls.slice().sort(), ["prefilter", "score", "score", "structure", "understand"]);
   assert.equal((await sql`SELECT state FROM pgboss.job WHERE id=${jobId}`)[0]!.state, "completed");
@@ -120,14 +127,14 @@ for (const failScore of [false, true]) test(`SIGTERM during ${failScore ? "faile
   // Isolate this real pg-boss worker from articles queued by the other invariant tests. No retry delay:
   // the restarted worker's first poll takes the retry instead of waiting out a polling interval.
   await boss.createQueue(queue, { policy: "short", retryLimit: 4, retryDelay: 0, expireInSeconds: 120 });
-  const { articleId } = await upsertMaterial({ sourceId: SOURCE, url: `https://example.org/analyze-stop-${T}/${failScore}`, title: `A new model released ${T} ${failScore}`,
-    bodyText: `A lab released a new AI model with benchmarks and prices. ${T} ${failScore} ` + "The release explains model capabilities and evaluation results. ".repeat(10),
+  const { articleId } = await upsertMaterial({ sourceId: SOURCE, url: `https://example.org/analyze-stop-${T}/${failScore}`, title: `A new knitwear collection released ${T} ${failScore}`,
+    bodyText: `A brand released a new knitwear collection with yarn details and prices. ${T} ${failScore} ` + "The release explains stitch, color and fit details. ".repeat(10),
     bodyStatus: "ok", language: "en", via: "fetch", publishedAt: new Date() });
   await sql`UPDATE articles SET processing_attempts=2,processing_error='prior temporary failure',processing_queued_at=now() WHERE id=${articleId}`;
   const jobId = await boss.send(queue, { articleId }, { singletonKey: articleId });
   const first = worker(queue);
   await Promise.race([Promise.all([first.ready, active.scoreAsked.promise, active.structureAsked.promise]), first.done.then(() => assert.fail("worker exited before both requests"))]);
-  first.child.kill("SIGTERM"); await first.stopping;
+  requestShutdown(first.child); await first.stopping;
   active.scoreAnswer.open();
   await until(async () => !!(await sql`SELECT 1 FROM receipts WHERE subject=${`article:${articleId}@1`} AND purpose='score_article' AND status IN ('received','failed')`)[0], "score receipt");
   assert.equal(first.child.exitCode, null, "the process stays alive while structure owns a paid response");
@@ -143,7 +150,7 @@ for (const failScore of [false, true]) test(`SIGTERM during ${failScore ? "faile
   assert.equal((await sql`SELECT state FROM pgboss.job WHERE id=${jobId}`)[0]!.state, "retry", "pg-boss owns restart recovery");
   const restarted = worker(queue); await restarted.ready;
   await until(async () => (await sql`SELECT state FROM pgboss.job WHERE id=${jobId}`)[0]?.state === "completed", "completed retry");
-  restarted.child.kill("SIGTERM"); await restarted.done;
+  requestShutdown(restarted.child); await restarted.done;
   assert.equal(active.calls.filter(s => s === "prefilter").length, 1);
   assert.equal(active.calls.filter(s => s === "structure").length, 1, "the slow structure answer was saved and reused");
   assert.equal(active.calls.filter(s => s === "score").length, failScore ? 3 : 2, "two ordered successful scores, only a rejected request repeats");

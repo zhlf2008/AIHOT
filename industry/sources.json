@@ -1,135 +1,12 @@
 {
-  "$comment": "示范信源：首次启动时导入（scripts/seed.ts），已存在的不会被覆盖。之后在后台“信源”里新建、修改和暂停。字段说明见 docs/customize.md。",
+  "$comment": "针织服装潮流信源；行业媒体默认摘要。仅逐篇核验的欧盟/EEA开放许可文字开启站内正文，详见fulltext-rights.json；全文RSS保持关闭。",
   "sources": [
     {
-      "id": "rss-openai-news",
-      "name": "OpenAI News",
+      "id": "rss-cotton-inc",
+      "name": "Cotton Incorporated News",
       "kind": "rss",
       "config": {
-        "feedUrl": "https://openai.com/news/rss.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
-      "owner_entity_id": "openai",
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "官方"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-google-deepmind",
-      "name": "Google DeepMind",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://deepmind.google/blog/rss.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
-      "owner_entity_id": "google",
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "官方"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-google-research",
-      "name": "Google Research",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://research.google/blog/rss/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
-      "owner_entity_id": "google",
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "官方",
-        "研究"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-hugging-face",
-      "name": "Hugging Face Blog",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://huggingface.co/blog/feed.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
-      "owner_entity_id": "hugging-face",
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "官方",
-        "开源"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-microsoft-research",
-      "name": "Microsoft Research",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.microsoft.com/en-us/research/feed/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
-      "owner_entity_id": "microsoft",
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "官方",
-        "研究"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-nvidia-blog",
-      "name": "NVIDIA Blog",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://blogs.nvidia.com/feed/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
-      "owner_entity_id": "nvidia",
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "官方"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-aws-ml",
-      "name": "AWS Machine Learning Blog",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://aws.amazon.com/blogs/machine-learning/feed/",
+        "feedUrl": "https://www.cottoninc.com/feed/",
         "_aihot": {
           "initialBackfillLimit": 8
         }
@@ -140,17 +17,245 @@
       "interval_minutes": 120,
       "tags": [
         "官方",
-        "教程"
+        "纤维",
+        "市场"
       ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-github-ai",
-      "name": "GitHub Blog · AI & ML",
+      "id": "rss-fibre2fashion-textile",
+      "name": "Fibre2Fashion · Textile News",
       "kind": "rss",
       "config": {
-        "feedUrl": "https://github.blog/ai-and-ml/feed/",
+        "feedUrl": "https://feeds.feedburner.com/fibre2fashion/textile-news",
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 90,
+      "tags": [
+        "行业媒体",
+        "市场"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "rss-the-industry-fashion",
+      "name": "TheIndustry.fashion",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://theindustry.fashion/feed/",
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 90,
+      "tags": [
+        "行业媒体",
+        "市场"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "rss-textilegence",
+      "name": "Textilegence",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://www.textilegence.com/en/feed/",
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "tags": [
+        "行业媒体",
+        "技术"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "rss-textile-world",
+      "name": "Textile World",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://www.textileworld.com/feed/",
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "tags": [
+        "行业媒体",
+        "技术"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "rss-knitting-industry",
+      "name": "Knitting Industry",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://www.knittingindustry.com/feed/",
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "tags": [
+        "针织",
+        "纱线",
+        "技术"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "rss-knitting-trade-journal",
+      "name": "Knitting Trade Journal",
+      "kind": "rss",
+      "config": {
+        "feedUrl": "https://www.knittingtradejournal.com/feed/",
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T2",
+      "owner_entity_id": null,
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "tags": [
+        "针织",
+        "技术",
+        "市场"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-pitti-filati",
+      "name": "Pitti Filati（官方新闻）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://filati.pittimmagine.com/en",
+        "parseMode": "html",
+        "itemSelector": "a[href*='/en/pittimmagine/archive/'][href*='/news/']",
+        "linkSelector": "a[href*='/en/pittimmagine/archive/'][href*='/news/']",
+        "titleSelector": "a[href*='/en/pittimmagine/archive/'][href*='/news/']",
+        "allowUrlPrefixes": [
+          "https://filati.pittimmagine.com/en/pittimmagine/archive/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "pitti-filati",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "官方",
+        "针织",
+        "纱线",
+        "趋势"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-woolmark-newsroom",
+      "name": "The Woolmark Company Newsroom（官方新闻）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.woolmark.com/industry/newsroom/",
+        "parseMode": "html",
+        "itemSelector": ".articleListItem-content",
+        "linkSelector": "a.articleListItem-linkOverlay",
+        "titleSelector": ".articleListItem-title",
+        "publishedAtSelector": ".articleListItem-date",
+        "allowUrlPrefixes": [
+          "https://www.woolmark.com/industry/newsroom/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        },
+        "publishedAtUtcOffset": "+00:00"
+      },
+      "tier": "T1",
+      "owner_entity_id": "woolmark",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "官方",
+        "针织",
+        "羊毛",
+        "可持续"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-premiere-vision-magazine",
+      "name": "Première Vision Magazine（官方趋势）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.premierevision.com/en/content/magazine",
+        "parseMode": "html",
+        "itemSelector": "article.itemcontent",
+        "linkSelector": "a.card-cliquable[href*='/en/articles/']",
+        "titleSelector": "h3.title",
+        "allowUrlPrefixes": [
+          "https://www.premierevision.com/en/articles/"
+        ],
+        "_aihot": {
+          "initialBackfillLimit": 8
+        }
+      },
+      "tier": "T1",
+      "owner_entity_id": "premiere-vision",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "tags": [
+        "官方",
+        "趋势",
+        "材料",
+        "设计"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-pantone-color",
+      "name": "Pantone Color Insights（官方色彩）",
+      "kind": "web_list",
+      "config": {
+        "url": "https://www.pantone.com/articles/color-of-the-year",
+        "parseMode": "html",
+        "itemSelector": "article",
+        "linkSelector": "a.mb-1[href*='/articles/color-of-the-year/']",
+        "titleSelector": "a.mb-1[href*='/articles/color-of-the-year/']",
+        "allowUrlPrefixes": [
+          "https://www.pantone.com/articles/color-of-the-year/"
+        ],
         "_aihot": {
           "initialBackfillLimit": 8
         }
@@ -158,212 +263,88 @@
       "tier": "T1",
       "owner_entity_id": null,
       "participation_mode": "editorial",
-      "interval_minutes": 120,
+      "interval_minutes": 360,
       "tags": [
-        "官方"
+        "官方",
+        "色彩",
+        "趋势",
+        "纱线"
       ],
       "site_fulltext": false,
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-mistral",
-      "name": "Mistral AI",
-      "kind": "rss",
+      "id": "web-eu-textiles",
+      "name": "欧盟委员会 · 纺织与循环政策",
+      "kind": "web_list",
       "config": {
-        "feedUrl": "https://mistral.ai/news/rss",
+        "url": "https://environment.ec.europa.eu/strategy/textiles-strategy_en",
+        "parseMode": "html",
+        "itemSelector": ".ecl-content-block__title a[href]",
+        "linkSelector": ".ecl-content-block__title a[href]",
+        "allowUrlPrefixes": [
+          "https://environment.ec.europa.eu/news/ban-destruction-unsold-clothes-and-shoes-enters-application-2026-07-17_en",
+          "https://environment.ec.europa.eu/news/exploring-textiles-and-circular-economy-study-recommends-tools-assess-and-address-unintended-effects-2025-12-03_en"
+        ],
+        "detail": {
+          "maxFetches": 2,
+          "titleSelector": "h1",
+          "titleAuthoritative": true,
+          "publishedAtSelector": "time[datetime]"
+        },
         "_aihot": {
-          "initialBackfillLimit": 8
+          "initialBackfillLimit": 2,
+          "initialBackfillMonths": 24
         }
       },
       "tier": "T1",
       "owner_entity_id": null,
       "participation_mode": "editorial",
-      "interval_minutes": 120,
+      "interval_minutes": 360,
       "tags": [
-        "官方"
+        "官方",
+        "纺织",
+        "循环材料",
+        "开放许可"
       ],
-      "site_fulltext": false,
+      "site_fulltext": true,
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-bair",
-      "name": "Berkeley AI Research",
-      "kind": "rss",
+      "id": "web-eea-textiles",
+      "name": "欧洲环境署 · 纺织循环研究",
+      "kind": "web_list",
       "config": {
-        "feedUrl": "https://bair.berkeley.edu/blog/feed.xml",
+        "url": "https://www.eea.europa.eu/en/topics/in-depth/textiles",
+        "parseMode": "html",
+        "itemSelector": "a[href*=\"/en/newsroom/news/\"], a[href*=\"/en/analysis/publications/\"]",
+        "linkSelector": "a[href*=\"/en/newsroom/news/\"], a[href*=\"/en/analysis/publications/\"]",
+        "allowUrlPrefixes": [
+          "https://www.eea.europa.eu/en/newsroom/news/consumption-of-clothing-footwear-other-textiles-in-the-eu-reaches-new-record-high",
+          "https://www.eea.europa.eu/en/analysis/publications/circularity-of-the-eu-textiles-value-chain-in-numbers"
+        ],
+        "detail": {
+          "maxFetches": 2,
+          "titleSelector": "h1",
+          "titleAuthoritative": true,
+          "publishedAtSelector": "time[datetime]"
+        },
         "_aihot": {
-          "initialBackfillLimit": 8
+          "initialBackfillLimit": 2,
+          "initialBackfillMonths": 24
         }
       },
       "tier": "T1",
       "owner_entity_id": null,
       "participation_mode": "editorial",
-      "interval_minutes": 180,
+      "interval_minutes": 360,
       "tags": [
-        "研究"
+        "官方",
+        "纺织",
+        "循环材料",
+        "开放许可"
       ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-the-verge-ai",
-      "name": "The Verge · AI",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 60,
-      "tags": [
-        "媒体"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-techcrunch-ai",
-      "name": "TechCrunch · AI",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://techcrunch.com/category/artificial-intelligence/feed/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 60,
-      "tags": [
-        "媒体"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-ars-technica-ai",
-      "name": "Ars Technica · AI",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://arstechnica.com/ai/feed/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 60,
-      "tags": [
-        "媒体"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-mit-tech-review-ai",
-      "name": "MIT Technology Review · AI",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "媒体"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-the-decoder",
-      "name": "The Decoder",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://the-decoder.com/feed/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 60,
-      "tags": [
-        "媒体"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-simon-willison",
-      "name": "Simon Willison",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://simonwillison.net/atom/everything/",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 120,
-      "tags": [
-        "个人"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-import-ai",
-      "name": "Import AI",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://importai.substack.com/feed",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 180,
-      "tags": [
-        "个人",
-        "周刊"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-latent-space",
-      "name": "Latent Space",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.latent.space/feed",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 180,
-      "tags": [
-        "个人"
-      ],
-      "site_fulltext": false,
+      "site_fulltext": true,
       "syndicate_fulltext": false
     }
   ]

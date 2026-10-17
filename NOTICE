@@ -7,6 +7,12 @@ and logo for your site.
 This repository also contains third-party material under its own terms:
 
 - assets/og-fonts/: Noto Sans SC, SIL Open Font License 1.1 (assets/og-fonts/LICENSE).
+- Cloudflare media dependencies: @cf-wasm/og 0.5.0 (MIT), @cf-wasm/photon 0.4.0
+  (Apache-2.0), @cf-wasm/resvg 0.4.0 and @cf-wasm/satori 0.4.2 (MPL-2.0),
+  image-size 2.0.2 (MIT). Their unmodified package sources and license texts are available at
+  https://github.com/fineshopdesign/cf-wasm and https://github.com/image-size/image-size,
+  with exact distributions pinned in package-lock.json. These terms apply to the dependencies;
+  this repository's own code remains under LICENSE.
 
 The demo sources in industry/sources.json are public feeds of their publishers. Their content belongs
 to them; by default the site shows only a summary and a link to the original.

@@ -2,4 +2,11 @@
 // 写作那一步写完中文标题、摘要和推荐理由后逐个查，用了就让模型只改这些地方一次（packages/backend/src/editorial/
 // analyze.ts 的 mendWording）。只列一眼就能判断的写法：拿不准的不列，否则会误改正常的词。空着就不查。
 
-export const READER_WORDING: ReadonlyArray<readonly [RegExp, string]> = [];
+export const READER_WORDING: ReadonlyArray<readonly [RegExp, string]> = [
+  [/重磅|炸裂|王炸|封神|天花板/gu, "去掉夸张词，直接写事实"],
+  [/黑科技/gu, "具体写材料、工艺或功能"],
+  [/赋能/gu, "改为直接说明带来的变化"],
+  [/可持续发展/gu, "若有具体指标，写明指标；否则改为可持续"],
+  [/引领行业|重新定义/gu, "只有原文有可核验依据时保留，否则直接写变化"],
+  [/爆款|出圈/gu, "改为销量、搜索、渠道或其他可核验数据"],
+];

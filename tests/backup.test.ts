@@ -28,6 +28,11 @@ const env = {
 };
 const originalEnv = Object.fromEntries(Object.keys(env).map(key => [key, process.env[key]]));
 Object.assign(process.env, env);
+const originalTarOptions = process.env.TAR_OPTIONS;
+// Git for Windows' GNU tar treats a drive-letter archive path as a remote archive
+// unless --force-local is present. Keep the production command and real tar flow
+// unchanged; this only makes the Windows test fixture accept native temp paths.
+if (process.platform === "win32") process.env.TAR_OPTIONS = [originalTarOptions, "--force-local"].filter(Boolean).join(" ");
 const roots: string[] = [];
 const databases = new Set<string>();
 const objects = new Map<string, Buffer>();
@@ -56,6 +61,7 @@ after(async () => {
   for (const [key, value] of Object.entries(originalEnv)) {
     if (value === undefined) delete process.env[key]; else process.env[key] = value;
   }
+  if (originalTarOptions === undefined) delete process.env.TAR_OPTIONS; else process.env.TAR_OPTIONS = originalTarOptions;
   for (const name of databases) await sql.unsafe(`DROP DATABASE "${name}" WITH (FORCE)`);
   await closeDb();
   for (const root of roots) await rm(root, { recursive: true, force: true });
@@ -70,7 +76,8 @@ async function extractSavedFiles() {
   await writeFile(archivePath, archive);
   const data = path.join(destination, "data");
   await mkdir(data);
-  await run("tar", ["-xzf", archivePath, "-C", data]);
+  const tarPath = (file: string) => process.platform === "win32" ? `/${file[0]!.toLowerCase()}${file.slice(2).replaceAll("\\", "/")}` : file;
+  await run("tar", ["-xzf", tarPath(archivePath), "-C", tarPath(data)]);
   return { destination, data };
 }
 
@@ -168,6 +175,21 @@ async function withPackingFailures(failures: number, action: (count: () => Promi
   const bin = path.join(config.dataDir, "test-bin");
   await mkdir(bin);
   const countFile = path.join(bin, "count");
+  if (process.platform === "win32") {
+    const realTar = (await run("where.exe", ["tar"])).stdout.split(/\r?\n/).find((line) => line.toLowerCase().endsWith("\\tar.exe"))!;
+    assert.ok(realTar && path.isAbsolute(realTar));
+    const csc = path.join(process.env.WINDIR ?? "C:\\Windows", "Microsoft.NET", "Framework64", "v4.0.30319", "csc.exe");
+    const shim = path.join(bin, "tar.exe");
+    await run(csc, ["/nologo", "/target:exe", `/out:${shim}`, path.resolve(import.meta.dirname, "fixtures/tar-shim.cs")]);
+    const replacement = { PATH: `${bin}${path.delimiter}${process.env.PATH}`, BACKUP_TEST_COUNT: countFile, BACKUP_TEST_FAILURES: String(failures), BACKUP_TEST_TAR: realTar };
+    const previous = Object.fromEntries(Object.keys(replacement).map(key => [key, process.env[key]]));
+    Object.assign(process.env, replacement);
+    try { await action(async () => Number(await readFile(countFile, "utf8"))); }
+    finally {
+      for (const [key, value] of Object.entries(previous)) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }
+    }
+    return;
+  }
   const realTar = (await run("sh", ["-c", "command -v tar"])).stdout.trim();
   assert.ok(path.isAbsolute(realTar));
   // Only this process's command lookup changes: restoring and the successful attempts run the real tar.

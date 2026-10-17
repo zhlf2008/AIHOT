@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>针织时尚 HOT — 全球针织趋势与产业观察</title>
+  <meta name="description" content="连接全球针织灵感与产业现场。追踪秀场趋势、纱线色彩、针织工艺、品牌市场与可持续材料，回到每一条消息的权威来源。">
+  <meta name="theme-color" content="#eeeae1"><meta property="og:title" content="针织时尚 HOT · 从一根纱，看见下一季">
+  <meta property="og:description" content="全球针织趋势与产业观察，22 个全球信源入口，原文可追溯。">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="针织时尚 HOT" href="/feed.xml">
+  <link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要内容</a>
+  <header class="header">
+    <a class="brand" href="/" aria-label="针织时尚 HOT 首页"><img src="/favicon.svg" alt="" width="34" height="34"><span>针织时尚<span class="brand-hot">HOT<span class="dot"></span></span></span></a>
+    <nav aria-label="主导航"><button class="nav-item active" data-view="discover">趋势发现</button><button class="nav-item" data-view="digest">趋势简报</button><button class="nav-item" data-view="sources">全球信源<span class="nav-arrow">↗</span></button><button class="nav-item" data-view="saved">我的收藏<span id="saved-count"></span></button></nav>
+    <a class="rss-link" href="/feed.xml" title="订阅 RSS">订阅 RSS <span>↗</span></a>
+  </header>
+  <main id="main">
+    <section class="hero" id="hero">
+      <div class="hero-copy"><div class="eyebrow"><span class="dot"></span> KNIT INTELLIGENCE · GLOBAL PERSPECTIVE</div><h1>从一根纱，<br>看见<span class="serif">下一季。</span></h1><p>连接全球灵感与产业现场。<br>为针织设计师、买手与研发团队，梳理值得关注的变化。</p><a class="hero-button" href="#journal">探索最新动态 <span>↘</span></a><div class="hero-note"><span class="line"></span> 以来源为起点，让灵感有迹可循</div></div>
+      <div class="fabric"><img class="fabric-image" src="/knit-study.svg" alt="奶油白针织肌理与橄榄绿、陶土色纱线的织物配色插画"><div class="fabric-caption"><span>THE MATERIAL STUDY</span><span>肌理 · 色彩 · 结构</span></div><div class="fabric-label"><span>01 / TEXTURE</span><b>编织，<br>更多可能。</b></div></div>
+    </section>
+    <section class="pulse" aria-label="站点动态"><span class="pulse-title"><span class="dot"></span> GLOBAL PULSE</span><div><b id="stat-sources">—</b> 全球信源</div><div><b id="stat-total">—</b> 条产业动态</div><div><b id="stat-active">—</b> 个采集源正常</div><span class="updated" id="updated">正在读取更新状态…</span></section>
+    <section class="workspace" id="journal">
+      <div class="section-heading"><div><span class="eyebrow" id="section-kicker">THE KNIT JOURNAL</span><h2 id="section-title">全球针织观察<span class="small-serif">The latest, in focus.</span></h2></div><span class="section-index" id="section-index">01 / DISCOVER</span></div>
+      <div id="news-panel">
+        <div class="toolbar"><div class="tabs" role="group" aria-label="内容分类"><button class="tab active" data-category="all">全部动态</button><button class="tab" data-category="runway">秀场与趋势</button><button class="tab" data-category="yarn">纱线与色彩</button><button class="tab" data-category="technology">针织与工艺</button><button class="tab" data-category="market">品牌与市场</button><button class="tab" data-category="sustainability">可持续材料</button></div></div>
+        <div class="filters"><form id="search-form" role="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索品牌、纱线、工艺… / 支持原文关键词" aria-label="搜索资讯" maxlength="100"><button type="submit">搜索</button></form><div class="filter-controls"><select id="period" aria-label="时间范围"><option value="">全部时间</option><option value="day">最近 24 小时</option><option value="week">最近 7 天</option><option value="month">最近 30 天</option></select><select id="sort" aria-label="排序方式"><option value="latest">最新发布</option><option value="relevance">针织相关优先</option></select></div></div>
+        <div class="reading-note"><span>i</span><p id="reading-note">标题与短摘要保留来源原文；无发布日期的条目标注收录时间。点击标题阅读原文。</p></div>
+        <div class="journal-layout"><div><div class="list-meta"><span id="result-count" role="status" aria-live="polite">正在读取动态…</span><span>资讯索引 / 可溯源</span></div><div id="article-list" aria-busy="true"><div class="loading">正在连接全球针织资讯…</div></div><button id="load-more" class="load-more" hidden>阅读更多动态 <span>↓</span></button></div>
+          <aside class="sidebar"><div class="side-heading"><span class="eyebrow">RESEARCH DESK</span><h3>下一次灵感，<br>从这里开始。</h3></div><a class="research-link" href="https://filati.pittimmagine.com/en" target="_blank" rel="noopener noreferrer"><span>01 / YARN & COLOUR</span><b>Pitti Filati</b><p>走进佛罗伦萨纱线与针织展会</p><i>↗</i></a><a class="research-link" href="https://www.woolmark.com/industry/source-wool/the-wool-lab/" target="_blank" rel="noopener noreferrer"><span>02 / MATERIAL LIBRARY</span><b>The Wool Lab</b><p>探索羊毛纱线、面料与季节主题</p><i>↗</i></a><a class="research-link" href="https://www.vogue.com/fashion-shows" target="_blank" rel="noopener noreferrer"><span>03 / RUNWAY REFERENCE</span><b>Vogue Runway</b><p>回到秀场，观察廓形与造型语言</p><i>↗</i></a><div class="source-policy"><span class="eyebrow">OUR APPROACH</span><p>趋势需要证据，<br>灵感保留出处。</p><span>优先官方一手信息<br>公开摘要与原文链接<br>订阅内容请前往来源方</span><button data-view="sources">了解我们的信源 <span>↗</span></button></div></aside>
+        </div>
+      </div>
+      <div id="sources-panel" hidden><div class="source-intro"><p>从纤维到秀场，从设备到零售。<br>官方一手信息与专业行业报道，为每一次判断提供出处。</p><div class="legend"><span>● 官方机构 / 展会 / 企业</span><span>○ 专业媒体</span><span>↗ 原站阅读入口</span></div></div><div class="source-filters"><label>覆盖区域 <select id="source-region"><option value="all">全球</option><option value="Europe">欧洲</option><option value="Asia">亚洲</option><option value="North America">北美</option><option value="Oceania">大洋洲</option></select></label><label>接入方式 <select id="source-mode"><option value="all">全部</option><option value="auto">自动采集</option><option value="directory">阅读入口</option></select></label></div><div id="source-grid" class="source-grid"></div></div>
+    </section>
+  </main>
+  <footer><div class="footer-brand">针织时尚 HOT<span>KNIT INTELLIGENCE, WOVEN DAILY.</span></div><div class="footer-description">全球针织趋势与产业观察<br>原文版权归来源方所有，重要信息请核对原文。</div><div class="footer-links"><button id="about-button">关于本站</button><button id="privacy-button">隐私与使用说明</button><a href="https://github.com/zhlf2008/AIHOT" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>© <span id="year">2026</span> 针织时尚 HOT</span></div></footer>
+  <dialog id="info-dialog"><button class="dialog-close" aria-label="关闭">×</button><div id="dialog-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body></html>

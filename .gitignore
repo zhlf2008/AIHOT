@@ -6,6 +6,11 @@ dist/
 .cache/
 .DS_Store
 .data/
+.wrangler/
+**/.build/
+.dev.vars
+.dev.vars.*
+output/
 
 # Web production build
 apps/web/build/

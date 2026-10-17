@@ -1,0 +1,19 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "knit-fashion-hot-legacy",
+  "account_id": "6e4e1f26f98366c93187ba53f375f46b",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*", "/feed.xml", "/robots.txt", "/llms.txt"] },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "knithot-db",
+    "database_id": "e8fa6205-a963-486d-8997-703ab2935b9c",
+    "migrations_dir": "d1-migrations"
+  }],
+  "triggers": { "crons": [] },
+  "vars": { "COLLECT_ENABLED": "false" },
+  "observability": { "enabled": true }
+}

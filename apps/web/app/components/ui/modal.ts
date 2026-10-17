@@ -1,6 +1,6 @@
 // Shared lifecycle for the sheet, search and image viewer: only the top layer handles the keyboard,
 // and scrolling stays locked until the last layer closes, including when one dialog replaces another.
-import { useEffect, useRef, type RefObject } from "react";
+import { useLayoutEffect, useRef, type RefObject } from "react";
 
 const layers: object[] = [];
 let pageOverflow = "";
@@ -16,7 +16,8 @@ export function useModal({ open, panel, onClose, initialFocus, returnFocus, onKe
 }) {
   const current = useRef({ onClose, onKeyDown });
   current.current = { onClose, onKeyDown };
-  useEffect(() => {
+  // Release focus/inert state in the closing commit, before a quick reopen can focus the input.
+  useLayoutEffect(() => {
     if (!open || !panel.current) return;
     const element = panel.current;
     element.inert = false;

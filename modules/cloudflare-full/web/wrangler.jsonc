@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../node_modules/wrangler/config-schema.json",
+  "name": "knit-hot-web",
+  "account_id": "6e4e1f26f98366c93187ba53f375f46b",
+  "main": "./worker.ts",
+  "compatibility_date": "2026-10-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "limits": { "cpu_ms": 30000 },
+  "vars": { "SITE_URL": "https://knit-hot-web.534569779.workers.dev" },
+  "assets": { "directory": "./.build/client", "binding": "ASSETS" },
+  "services": [{ "binding": "API", "service": "knit-hot-api" }],
+  "workers_dev": true,
+  "observability": { "enabled": true }
+}

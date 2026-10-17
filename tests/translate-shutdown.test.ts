@@ -18,12 +18,19 @@ const provider = await stub(async (_hit, req) => {
   return { id: 'stub', choices: [{ message: { content: JSON.stringify({ t }) } }], usage: { prompt_tokens: 10, completion_tokens: 10, total_tokens: 20 } };
 });
 
+function requestShutdown(child: ReturnType<typeof spawn>) {
+  if (process.platform === 'win32') child.send({ shutdown: true });
+  else child.kill('SIGTERM');
+}
+
 function runTranslation() {
   const script = `
     import { translatePending } from '@aihot/backend/editorial/translate';
     import { shutdownSignal } from '@aihot/backend/jobs/queue';
     import { closeDb } from '@aihot/backend/db';
-    process.on('SIGTERM', () => { shutdownSignal.abort(); process.send({ stopped: true }); });
+    const shutdown = () => { shutdownSignal.abort(); process.send({ stopped: true }); };
+    process.on('SIGTERM', shutdown);
+    process.on('message', (message) => { if (message && message.shutdown) shutdown(); });
     try { process.send({ result: await translatePending({ limit: 1 }) }); }
     finally { await closeDb(); process.disconnect(); }
   `;
@@ -59,7 +66,7 @@ for (const misaligned of [false, true]) test(`SIGTERM finishes the sent ${misali
   await publishArticle(articleId, { releasedAt: new Date(Date.now() - 60_000) });
   const interrupted = runTranslation();
   await Promise.race([active.asked.promise, interrupted.done.then(() => assert.fail('translation ended before a request'))]);
-  interrupted.child.kill('SIGTERM');
+  requestShutdown(interrupted.child);
   await interrupted.stopped;
   active.hold.open();
   assert.deepEqual(await interrupted.done, { done: [], quotes: 0 });
